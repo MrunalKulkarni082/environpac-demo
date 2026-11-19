@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crave · Packaging Portal</title>
+<meta name="description" content="Environpac customer portal demo: branded inventory, orders and payments at a glance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="assets/crave-sun.png">
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<section id="login" class="login">
+  <div class="login-left">
+    <img src="assets/environpac-logo.png" alt="Environpac" class="ep-logo">
+    <div class="login-card">
+      <p class="eyebrow">Customer Portal</p>
+      <h1>Your packaging,<br><em>at a glance.</em></h1>
+      <p class="muted">Stock on hand, orders in motion and payments in one secure view, updated as close to real time as we can make it.</p>
+      <form id="loginForm" autocomplete="off">
+        <label>Username
+          <div class="field"><svg viewBox="0 0 24 24"><path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z"/></svg>
+          <input id="user" value="crave.italian" spellcheck="false"></div>
+        </label>
+        <label>Password
+          <div class="field"><svg viewBox="0 0 24 24"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9h-2ZM9 7a3 3 0 0 1 6 0v2H9V7Z"/></svg>
+          <input id="pass" type="password" value="demodemo1234"></div>
+        </label>
+        <div class="login-row"><label class="check"><input type="checkbox" checked> Keep me signed in</label><a href="#" onclick="return false">Forgot password?</a></div>
+        <button class="btn btn-primary btn-lg" type="submit"><span>Sign in securely</span><svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <p class="secure"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z"/></svg> Encrypted · Each customer sees only their own data</p>
+      </form>
+    </div>
+    <p class="login-foot">677 King Street · Charleston, SC · (843) 670-9915</p>
+  </div>
+  <div class="login-right">
+    <div class="slides" id="slides">
+      <img src="assets/bag.jpg" alt="" class="on">
+      <img src="assets/pizza-box.jpg" alt="">
+      <img src="assets/soup-cup.jpg" alt="">
+      <img src="assets/bowl-44oz.jpg" alt="">
+      <img src="assets/napkins.jpg" alt="">
+    </div>
+    <div class="slide-caption">
+      <p class="eyebrow light">Stored for you in Charleston</p>
+      <h2 id="slideCap">Black Kraft Shopping Bag</h2>
+      <div class="dots" id="slideDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOADER ============ -->
+<div id="loader" class="loader">
+  <img src="assets/crave-sun.png" alt="" class="loader-sun">
+  <p class="loader-title">Welcome back, Crave</p>
+  <p class="loader-sub" id="loaderSub">Syncing your warehouse…</p>
+  <div class="loader-bar"><i></i></div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" class="app" data-mode="customer">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand customer-only">
+      <img src="assets/crave-logo.png" alt="Crave Italian Oven and Bar">
+    </div>
+    <div class="brand admin-only">
+      <img src="assets/environpac-logo.png" alt="Environpac" class="brand-ep">
+      <span class="brand-tag">Admin Console</span>
+    </div>
+    <nav class="nav customer-only" id="navCustomer">
+      <a data-view="overview" class="active"><svg viewBox="0 0 24 24"><path d="M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z"/></svg>Overview</a>
+      <a data-view="inventory"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Zm-9 2.7L6.3 7.6 12 4.9l5.7 2.7L12 10.7Z"/></svg>Inventory</a>
+      <a data-view="orders"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5M9 12h8M9 16h8"/></svg>Orders</a>
+      <a data-view="payments" data-vis="payments"><svg viewBox="0 0 24 24"><path d="M2 6h20v12H2zM2 10h20M6 15h4"/></svg>Payments</a>
+      <a data-view="tracking" data-vis="incoming"><svg viewBox="0 0 24 24"><path d="M3 17h18l-2 4H5l-2-4Zm3-1V9h12v7M9 9V5h6v4"/></svg>Ocean Tracking <b class="pill-mini">Phase 2</b></a>
+    </nav>
+    <nav class="nav admin-only" id="navAdmin">
+      <a data-view="admin" class="active"><svg viewBox="0 0 24 24"><path d="M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z"/></svg>All customers</a>
+      <a data-view="admin" data-scroll="adminActions"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Quick updates</a>
+      <a data-view="admin" data-scroll="adminVis"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Zm10 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>Visibility controls</a>
+    </nav>
+
+    <div class="side-card customer-only">
+      <p class="side-label">Your account manager</p>
+      <div class="am"><span class="am-avatar">EP</span><div><b>Environpac Team</b><small>sales@environpac.com</small></div></div>
+      <div class="side-btns"><button class="btn btn-ghost-light btn-sm" data-chat><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1.1-4.6A8 8 0 1 1 21 12Z"/></svg>Chat</button><button class="btn btn-primary btn-sm" data-book><svg viewBox="0 0 24 24"><path d="M4 5h16v15H4zM4 10h16M8 3v4M16 3v4"/></svg>Book a call</button></div>
+      <div class="upcoming" id="upcoming"></div>
+    </div>
+    <div class="powered customer-only">
+      <span>Powered by</span><img src="assets/environpac-logo.png" alt="Environpac">
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <div class="top-title">
+        <p class="eyebrow" id="topEyebrow">Crave Italian Oven &amp; Bar</p>
+        <h2 id="topTitle">Overview</h2>
+      </div>
+      <div class="top-actions">
+        <div class="live"><i></i><span id="syncText">Synced just now</span></div>
+        <button class="btn btn-tour btn-sm" id="tourBtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Guided tour</button>
+        <div class="mode-switch" id="modeSwitch" role="tablist">
+          <button class="on" data-mode="customer">Customer view</button>
+          <button data-mode="admin">Environpac admin</button>
+          <i class="mode-glider"></i>
+        </div>
+        <div class="bell-wrap">
+          <button class="icon-btn bell" id="bellBtn" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M18 16V11a6 6 0 1 0-12 0v5l-2 2h16l-2-2Zm-8 4a2 2 0 0 0 4 0"/></svg><b class="badge" id="bellCount">3</b></button>
+          <div class="dropdown" id="bellMenu"></div>
+        </div>
+        <div class="avatar customer-only" title="Crave team"><img src="assets/crave-sun.png" alt=""></div>
+        <div class="avatar admin-only ep" title="Environpac">EP</div>
+      </div>
+    </header>
+
+    <div class="content" id="content">
+
+      <!-- ======== OVERVIEW ======== -->
+      <section class="view active" data-view="overview">
+        <div class="hero reveal" id="hero">
+          <img src="assets/crave-sun.png" alt="" class="hero-sun">
+          <div class="hero-text">
+            <p class="eyebrow light" id="greetEyebrow">Good evening</p>
+            <h1>Welcome back, <em>Crave</em> <span class="h1-sub">Italian Oven &amp; Bar</span></h1>
+            <p>Your branded packaging is safely stored in our Charleston warehouse and ready when you are. Here is everything at a glance.</p>
+            <div class="chips">
+              <span class="chip"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>Crave Myrtle Beach</span>
+              <span class="chip"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>Crave North Myrtle Beach</span>
+            </div>
+          </div>
+          <div class="hero-stat">
+            <p class="eyebrow light">Reserved for you</p>
+            <p class="hero-big"><span data-count="units">0</span></p>
+            <p class="hero-small">branded units across <b>6 products</b>, with <b id="heroIncoming">15,000</b> more on the way</p>
+          </div>
+        </div>
+
+        <div class="kpis" id="kpis">
+          <div class="kpi reveal" data-tour="kpis">
+            <div class="kpi-ico"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/></svg></div>
+            <p>Units in warehouse</p><h3 data-count="units">0</h3>
+            <span class="delta up">Ready to deliver</span>
+          </div>
+          <div class="kpi reveal">
+            <div class="kpi-ico"><svg viewBox="0 0 24 24"><path d="M3 17h18l-2 4H5l-2-4Zm3-1V9h12v7"/></svg></div>
+            <p>Incoming units</p><h3 data-count="incoming">0</h3>
+            <span class="delta">2 orders in progress</span>
+          </div>
+          <div class="kpi reveal vis-payments">
+            <div class="kpi-ico"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <p>Invested in 2026</p><h3 data-count="invested" data-money>0</h3>
+            <span class="delta up">+18% vs 2025</span>
+          </div>
+          <div class="kpi reveal vis-payments">
+            <div class="kpi-ico"><svg viewBox="0 0 24 24"><path d="M2 6h20v12H2zM2 10h20"/></svg></div>
+            <p>Balance due</p><h3 data-count="balance" data-money>0</h3>
+            <span class="delta warn" id="nextDue">$4,000 due Dec 9</span>
+          </div>
+        </div>
+
+        <div class="insights reveal vis-insights" id="insights" data-tour="insights">
+          <div class="ins-head">
+            <span class="ai-badge"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.3L20 10l-5.8 1.7L12 18l-2.2-6.3L4 10l5.8-1.7L12 2Zm7 12 1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3Z"/></svg>Smart insights</span>
+            <p>Based on your last 12 weeks of usage</p>
+          </div>
+          <div class="ins-list" id="insList"></div>
+        </div>
+
+        <div class="sec-head reveal">
+          <div><p class="eyebrow">Your branded packaging</p><h2>In our warehouse for you</h2></div>
+          <div class="legend"><span><i class="ok"></i>Healthy</span><span><i class="warn"></i>Reorder soon</span><span><i class="low"></i>Low</span></div>
+        </div>
+        <div class="products" id="products" data-tour="products"></div>
+
+        <div class="grid-2">
+          <div class="card reveal" data-tour="orders">
+            <div class="card-head"><div><p class="eyebrow">Orders in progress</p><h3>From artwork to your door</h3></div><a class="link" data-goto="orders">View all</a></div>
+            <div id="orderTimelines"></div>
+          </div>
+          <div class="card reveal vis-payments" data-tour="payments">
+            <div class="card-head"><div><p class="eyebrow">Spend &amp; payments</p><h3>Where your investment goes</h3></div><a class="link" data-goto="payments">Statement</a></div>
+            <div class="pay-wrap">
+              <div class="donut-box"><canvas id="donut"></canvas><div class="donut-center"><small>2026 total</small><b data-count="invested" data-money>0</b></div></div>
+              <ul class="donut-legend" id="donutLegend"></ul>
+            </div>
+            <div class="pay-mini" id="payMini"></div>
+          </div>
+        </div>
+
+        <div class="grid-2 wide-left">
+          <div class="card reveal">
+            <div class="card-head"><div><p class="eyebrow">Usage trend</p><h3>Units used per month</h3></div>
+              <span class="tag-ai"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.3L20 10l-5.8 1.7L12 18l-2.2-6.3L4 10l5.8-1.7L12 2Z"/></svg>Summer peak was 38% higher. We've already planned stock for 2027.</span></div>
+            <div class="chart-box"><canvas id="usageChart"></canvas></div>
+          </div>
+          <div class="card ship-card reveal vis-incoming" data-tour="ship">
+            <div class="card-head"><div><p class="eyebrow">Live ocean tracking <b class="pill-mini gold">Phase 2</b></p><h3>Order EP-2611 is at sea</h3></div></div>
+            <div class="ship-mini" id="shipMini"></div>
+            <div class="ship-meta"><div><small>From</small><b>Ningbo, CN</b></div><div><small>ETA Charleston</small><b>Dec 9, 2026</b></div><div><small>Progress</small><b>68%</b></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======== INVENTORY ======== -->
+      <section class="view" data-view="inventory">
+        <div class="sec-head reveal"><div><p class="eyebrow">Inventory</p><h2>Stock on hand &amp; weeks of cover</h2></div>
+          <button class="btn btn-outline btn-sm" data-toast="Inventory report exported to PDF (demo)"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 21h16"/></svg>Export</button></div>
+        <div class="card reveal table-card"><div class="table-scroll"><table class="table" id="invTable"></table></div></div>
+      </section>
+
+      <!-- ======== ORDERS ======== -->
+      <section class="view" data-view="orders">
+        <div class="sec-head reveal"><div><p class="eyebrow">Orders</p><h2>Every order, every stage</h2></div>
+          <button class="btn btn-primary btn-sm" data-reorder="soup"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New reorder</button></div>
+        <div id="ordersFull"></div>
+      </section>
+
+      <!-- ======== PAYMENTS ======== -->
+      <section class="view" data-view="payments">
+        <div class="sec-head reveal"><div><p class="eyebrow">Payments</p><h2>Deposits, invoices &amp; balances</h2></div>
+          <button class="btn btn-outline btn-sm" data-toast="Statement for Crave Italian Oven & Bar downloaded (demo)"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 21h16"/></svg>Download statement</button></div>
+        <div class="pay-kpis" id="payKpis"></div>
+        <div class="card reveal table-card"><div class="table-scroll"><table class="table" id="ledger"></table></div></div>
+      </section>
+
+      <!-- ======== TRACKING ======== -->
+      <section class="view" data-view="tracking">
+        <div class="sec-head reveal"><div><p class="eyebrow">Ocean tracking · Phase 2 preview</p><h2>Know exactly where your packaging is</h2></div></div>
+        <div class="card reveal track-card">
+          <div class="track-map" id="trackMap"></div>
+          <div class="track-side">
+            <span class="status-pill sea">At sea</span>
+            <h3>EP-2611</h3>
+            <p class="muted">10,000 × 44 oz bowls · 5,000 × 16" pizza boxes</p>
+            <ul class="track-steps">
+              <li class="done"><b>Oct 22</b>Loaded at Ningbo port</li>
+              <li class="done"><b>Oct 24</b>Departed · Vessel <em>Ocean Pearl</em></li>
+              <li class="done"><b>Nov 12</b>Passed Panama Canal</li>
+              <li class="now"><b>Today</b>Caribbean Sea · on schedule</li>
+              <li><b>Dec 9</b>Arrives Charleston</li>
+              <li><b>Dec 11</b>Customs cleared → Environpac warehouse</li>
+            </ul>
+            <p class="phase-note">In Phase 2 this view links to live carrier data, so you'll get an automatic notification when your container lands.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======== ADMIN ======== -->
+      <section class="view" data-view="admin">
+        <div class="admin-hero reveal">
+          <div><p class="eyebrow light">Environpac · Admin console</p><h1>Every customer, one place.</h1><p>Update stock, orders and payments here, and each customer's portal changes immediately.</p></div>
+          <img src="assets/environpac-logo.png" alt="">
+        </div>
+        <div class="kpis" id="adminKpis"></div>
+        <div class="card reveal">
+          <div class="card-head"><div><p class="eyebrow">Customers</p><h3>Accounts &amp; stock health</h3></div><button class="btn btn-outline btn-sm" data-toast="New customer invite created (demo)"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add customer</button></div>
+          <div class="table-scroll"><table class="table" id="custTable"></table></div>
+        </div>
+        <div class="grid-2">
+          <div class="card reveal" id="adminActions">
+            <div class="card-head"><div><p class="eyebrow">Quick updates</p><h3>Update Crave's portal</h3></div></div>
+            <div class="tabs" id="actTabs"><button class="on" data-tab="stock">Stock</button><button data-tab="pay">Payment</button><button data-tab="order">Order status</button></div>
+            <form class="act-form on" data-tab="stock" id="fStock">
+              <label>Product<select id="fSku"></select></label>
+              <div class="row-2"><label>Movement<select id="fMove"><option value="in">Received into warehouse (+)</option><option value="out">Delivered to customer (−)</option></select></label>
+              <label>Quantity<input id="fQty" type="number" value="2500" min="0" step="50"></label></div>
+              <button class="btn btn-primary" type="submit">Update stock</button>
+            </form>
+            <form class="act-form" data-tab="pay" id="fPay">
+              <label>Payment for<select id="fPayFor"><option>EP-2611 · Balance</option><option>EP-2618 · Balance</option></select></label>
+              <div class="row-2"><label>Amount ($)<input id="fAmt" type="number" value="4000" min="0" step="any"></label>
+              <label>Method<select><option>ACH transfer</option><option>Card</option><option>Check</option></select></label></div>
+              <button class="btn btn-primary" type="submit">Record payment</button>
+            </form>
+            <form class="act-form" data-tab="order" id="fOrder">
+              <label>Order<select id="fOrd"></select></label>
+              <label>New stage<select id="fStage"></select></label>
+              <button class="btn btn-primary" type="submit">Update status</button>
+            </form>
+            <p class="act-hint">Try it: make a change, then switch to <b>Customer view</b> to see it.</p>
+          </div>
+          <div class="card reveal" id="adminVis">
+            <div class="card-head"><div><p class="eyebrow">Visibility controls</p><h3>What Crave can see</h3></div></div>
+            <div class="toggles">
+              <label class="toggle"><input type="checkbox" data-vis-toggle="payments" checked><i></i><div><b>Pricing &amp; payments</b><small>Spend, deposits, invoices and balances</small></div></label>
+              <label class="toggle"><input type="checkbox" data-vis-toggle="incoming" checked><i></i><div><b>Incoming shipments</b><small>Orders at sea and ETAs</small></div></label>
+              <label class="toggle"><input type="checkbox" data-vis-toggle="insights" checked><i></i><div><b>Smart insights</b><small>AI restock alerts and recommendations</small></div></label>
+              <label class="toggle"><input type="checkbox" checked data-toast-change="Weekly email digest enabled for Crave (demo)"><i></i><div><b>Weekly email digest</b><small>Every Monday 8:00 AM</small></div></label>
+            </div>
+            <div class="admin-alerts"><p class="eyebrow">Auto alerts sent this week</p><ul id="alertLog"></ul></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- Chat -->
+<button class="chat-fab customer-only" id="chatFab" aria-label="Chat with Environpac">
+  <svg class="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1.1-4.6A8 8 0 1 1 21 12Z"/></svg>
+  <svg class="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  <b class="badge" id="chatBadge">1</b>
+</button>
+<section class="chat" id="chat" aria-hidden="true">
+  <header class="chat-head">
+    <span class="am-avatar">EP<i class="online"></i></span>
+    <div><b>Environpac Team</b><small><i class="dot"></i>Online · usually replies in minutes</small></div>
+    <button class="chat-icon" data-book title="Book a call"><svg viewBox="0 0 24 24"><path d="M4 5h16v15H4zM4 10h16M8 3v4M16 3v4"/></svg></button>
+    <button class="chat-icon" id="chatClose" title="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </header>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chips-row" id="chatChips"></div>
+  <form class="chat-input" id="chatForm" autocomplete="off">
+    <button type="button" class="chat-icon" data-toast="File sharing: attach artwork, POs or invoices (demo)"><svg viewBox="0 0 24 24"><path d="m21 11-8.5 8.5a5 5 0 0 1-7-7L14 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L15 7"/></svg></button>
+    <input id="chatText" placeholder="Write a message…">
+    <button type="submit" class="send" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M4 12 20 4l-6 16-3-7-7-1Z"/></svg></button>
+  </form>
+</section>
+
+<!-- Drawer -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
+
+<!-- Modal -->
+<div class="modal-wrap" id="modalWrap"><div class="modal" id="modal"></div></div>
+
+<!-- Toasts -->
+<div class="toasts" id="toasts"></div>
+
+<!-- Tour -->
+<div class="tour-spot" id="tourSpot"></div>
+<div class="tour-tip" id="tourTip"></div>
+
+<script src="vendor/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
